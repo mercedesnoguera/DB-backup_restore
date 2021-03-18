@@ -3,7 +3,7 @@
   become: true
   tasks:
     - name: Create backup database MSPBS_SICIAP
-      shell: " pg_dump MSPBS_SICIAP -h 192.168.1.39 -p 5432 -U pruebauser -F c -b -v -f /home/datasystem/mnoguera/backup_test/database-mspbs_siciap{{ date }}mspbs_siciap "
+      shell: " pg_dump MSPBS_SICIAP -h 192.168.1.39 -p 5432 -U pruebauser -F c -b -v -f /home/datasystem/mnoguera/backup_test/database-mspbs_siciap{{ date }}.backup "
       vars:
           date: "{{ lookup('pipe', 'date +%Y%m%d') }}"
       ignore_errors: no
