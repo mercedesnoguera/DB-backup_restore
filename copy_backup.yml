@@ -4,7 +4,7 @@
   become_user: ansible
   tasks:
     - name: Copy file backup to server restore
-      shell: " scp /home/datasystem/mnoguera/backup_test/database-mspbs_siciap{{ date }}.backup datasystem@restore:/home/datasystem/mnoguera/restore "
+      shell: " scp /home/ansible/mnoguera/backup_test/database-mspbs_siciap{{ date }}.backup ansible@restore:/home/ansible/mnoguera/restore/ "
       vars:
           date: "{{ lookup('pipe', 'date +%Y%m%d') }}"
       ignore_errors: no
