@@ -17,7 +17,7 @@
 
 - hosts: restore
   become: true
-  become_user: ansible
+  become_user: datasystem
   tasks:
     - name: Create restore database testdb_data
       shell: " pg_restore -h 192.168.1.22 -p 5432 -U datasystem -d testdb_data -v /home/datasystem/mnoguera/restore/database-mspbs_siciap{{ date }}.backup "
