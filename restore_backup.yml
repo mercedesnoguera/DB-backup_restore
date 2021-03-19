@@ -1,26 +1,26 @@
 ---
 - hosts: restore
   become: true
-  become_user: ansible
+  become_user: datasystem
   tasks:
-    - name: Drop database testdb-data in restore
-      shell: " psql -U pruebauser < /tmp/archivo.elimina.bd.sql "
+    - name: Drop database testdb_data in restore
+      shell: " psql -U datasystem < /tmp/archivo.elimina.bd.sql "
+      ignore_errors: no
+
+- hosts: restore
+  become: true
+  become_user: datasystem
+  tasks:
+    - name: Create database testdb_data in restore
+      shell: " psql -U datasystem < /tmp/archivo.crea.bd.sql "
       ignore_errors: no
 
 - hosts: restore
   become: true
   become_user: ansible
   tasks:
-    - name: Create database testdb-data in restore
-      shell: " psql -U pruebauser < /tmp/archivo.crea.bd.sql "
-      ignore_errors: no
-
-- hosts: restore
-  become: true
-  become_user: ansible
-  tasks:
-    - name: Create restore database testtdb-data
-      shell: " pg_restore -h 192.168.1.22 -p 5432 -U pruebauser -d testdb-data -v /home/ansible/mnoguera/restore/database-mspbs_siciap{{ date }}.backup "
+    - name: Create restore database testdb_data
+      shell: " pg_restore -h 192.168.1.22 -p 5432 -U datasystem -d testdb_data -v /home/datasystem/mnoguera/restore/database-mspbs_siciap{{ date }}.backup "
       vars:
           date: "{{ lookup('pipe', 'date +%Y%m%d') }}"
       ignore_errors: no
