@@ -1,26 +1,26 @@
 ---
-#- hosts: restore
-#  become: true
-#  become_user: datasystem
-#  tasks:
-#    - name: Drop database MSPBS_SICIAP_TEST_RESTORE in restore
-#      shell: " psql -U datasystem < /tmp/archivo.elimina.bd.sql "
-#      ignore_errors: no
-#
-#- hosts: restore
-#  become: true
-#  become_user: datasystem
-#  tasks:
-#    - name: Create database MSPBS_SICIAP_TEST_RESTORE in restore
-#      shell: " psql -U datasystem < /tmp/archivo.crea.bd.sql "
-#      ignore_errors: no
-#
 - hosts: restore
   become: true
   become_user: datasystem
   tasks:
-    - name: Create restore database MSPBS_SICIAP in restore
-      shell: " pg_restore -h 192.168.1.22 -p 5432 -U datasystem -d MSPBS_SICIAP -v /home/datasystem/mnoguera/restore/database-mspbs_siciap{{ date }}.backup "
+    - name: Drop database MSPBS_SICIAP_TEST_RESTORE in restore
+      shell: " psql -U datasystem < /tmp/archivo.elimina.bd.sql "
+      ignore_errors: no
+
+- hosts: restore
+  become: true
+  become_user: datasystem
+  tasks:
+    - name: Create database MSPBS_SICIAP_TEST_RESTORE in restore
+      shell: " psql -U datasystem < /tmp/archivo.crea.bd.sql "
+      ignore_errors: no
+
+- hosts: restore
+  become: true
+  become_user: datasystem
+  tasks:
+    - name: Create restore database MSPBS_SICIAP_TEST_RESTORE in restore
+      shell: " pg_restore -h 192.168.1.22 -p 5432 -U datasystem -d MSPBS_SICIAP_TEST_RESTORE -v /home/datasystem/mnoguera/restore/database-mspbs_siciap{{ date }}.backup "
       vars:
           date: "{{ lookup('pipe', 'date +%Y%m%d') }}"
       ignore_errors: no
