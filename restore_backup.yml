@@ -25,3 +25,4 @@
           date: "{{ lookup('pipe', 'date +%Y%m%d') }}"
       ignore_errors: no
 
+
