@@ -20,9 +20,7 @@
   become_user: datasystem
   tasks:
     - name: Create restore database MSPBS_SICIAP_TEST_RESTORE in restore
-      shell: " pg_restore -h 192.168.1.22 -p 5432 -U datasystem -d mspbs_siciap_test_restore -j 6 -v /home/datasystem/mnoguera/restore/database-mspbs_siciap{{ date }}.backup "
-      vars:
-          date: "{{ lookup('pipe', 'date +%Y%m%d') }}"
+      shell: " pg_restore -h 192.168.1.22 -p 5432 -U datasystem -d mspbs_siciap_test_restore -j 6 -v /home/datasystem/mnoguera/restore/database-mspbs_siciap-{{ansible_date_time.date}}.backup "
       ignore_errors: no
 
 

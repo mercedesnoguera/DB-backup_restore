@@ -2,11 +2,15 @@
 - hosts: backup_test
   become: true
   tasks:
+    - name: Check if a backup exits
+      stat: 
+        path: /home/ansible/mnoguera/backup_test/database-mspbs_siciap-{{ansible_date_time.date}}.backup
+      register: backup_siciap
+
     - name: Create backup database MSPBS_SICIAP
-      shell: " pg_dump MSPBS_SICIAP -h 192.168.1.39 -p 5432 -U pruebauser -F c -b -v -f /home/ansible/mnoguera/backup_test/database-mspbs_siciap{{ date }}.backup "
-      vars:
-          date: "{{ lookup('pipe', 'date +%Y%m%d') }}"
+      shell: " pg_dump MSPBS_SICIAP -h 192.168.1.39 -p 5432 -U pruebauser -F c -b -v -f /home/ansible/mnoguera/backup_test/database-mspbs_siciap-{{ansible_date_time.date}}.backup "
       ignore_errors: no
+      when: not backup_siciap.stat.exists
       register: command_output
     - debug: msg="{{command_output.stdout}}"
 
