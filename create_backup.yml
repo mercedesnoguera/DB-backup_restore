@@ -12,5 +12,5 @@
       ignore_errors: no
       when: not backup_siciap.stat.exists
       register: command_output
-    - debug: msg="{{command_output.stdout}}"
+#    - debug: msg="{{command_output.stdout}}"
 
